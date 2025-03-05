@@ -71,7 +71,6 @@ jobs:
       with:
         script: |
           const vars = {
-
             ROX_CENTRAL_ENDPOINT: `${{ vars.ROX_CENTRAL_ENDPOINT }}`,
             # GITOPS_AUTH_USERNAME: `${{ vars.GITOPS_AUTH_USERNAME }}`,
             # Set this to the user for your specific registry
@@ -84,9 +83,7 @@ jobs:
             # ARTIFACTORY_IO_CREDS_USR: `${{ vars.ARTIFACTORY_IO_CREDS_USR }}`,
             # NEXUS_IO_CREDS_USR: `${{ vars.NEXUS_IO_CREDS_USR }}`,
             COSIGN_PUBLIC_KEY: `${{ vars.COSIGN_PUBLIC_KEY }}`,
-            
           };
-
           const missingVars = Object.entries(vars).filter(([ name, value ]) => {
             if (value.length === 0) {
               core.error(`Variable "${name}" is not set`);
@@ -95,7 +92,6 @@ jobs:
             core.info(`✔️ Variable "${name}" is set`);
             return false;
           });
-
           const secrets = {
             IMAGE_REGISTRY: `${{ secrets.IMAGE_REGISTRY }}`,
 
@@ -108,9 +104,7 @@ jobs:
             # NEXUS_IO_CREDS_PSW: `${{ secrets.NEXUS_IO_CREDS_PSW }}`,
             COSIGN_SECRET_PASSWORD: `${{ secrets.COSIGN_SECRET_PASSWORD }}`,
             COSIGN_SECRET_KEY: `${{ secrets.COSIGN_SECRET_KEY }}`,
-            
           };
-
           const missingSecrets = Object.entries(secrets).filter(([ name, value ]) => {
             if (value.length === 0) {
               core.error(`Secret "${name}" is not set`);
@@ -119,7 +113,6 @@ jobs:
             core.info(`✔️ Secret "${name}" is set`);
             return false;
           });
-
           if (missingVars.length > 0) {
             core.error(`❌ At least one required variable is not set in the repository. \n` +
               "You can add it using:\n" +
@@ -127,7 +120,6 @@ jobs:
               "GitHub CLI: https://cli.github.com/manual/gh_variable_set \n" +
               "Also, refer to https://github.com/redhat-actions/oc-login#getting-started-with-the-action-or-see-example");
           }
-
           if (missingSecrets.length > 0) {
             core.error(`❌ At least one required secret is not set in the repository. \n` +
               "You can add it using:\n" +
@@ -135,7 +127,6 @@ jobs:
               "GitHub CLI: https://cli.github.com/manual/gh_secret_set \n" +
               "Also, refer to https://github.com/redhat-actions/oc-login#getting-started-with-the-action-or-see-example");
           }
-
           if (missingVars.length > 0 || missingSecrets.length > 0) {
             core.setFailed()
           } else {
